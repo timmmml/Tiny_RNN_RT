@@ -1,0 +1,34 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: train.exp.seg.cpu.akamrat52
+spec:
+  template:
+    spec:
+      containers:
+      - name: demo
+        image: gitlab-registry.nrp-nautilus.io/prp/jupyter-stack/prp
+        command: ["/bin/bash"]
+        args:
+          - -c
+          - >-
+              cd /volume/cognitive_dynamics &&
+              python main.py -t exp_seg_akamrat.exp_seg_akamrat52
+        volumeMounts:
+        - mountPath: /volume
+          name: mattarlab-volume
+        resources:
+          limits:
+            memory: 16Gi
+            cpu: "27"
+            nvidia.com/gpu: "0"
+          requests:
+            memory: 8Gi
+            cpu: "27"
+            nvidia.com/gpu: "0"
+      volumes:
+        - name: mattarlab-volume
+          persistentVolumeClaim:
+            claimName: mattarlab-volume
+      restartPolicy: Never
+  backoffLimit: 1
