@@ -7,8 +7,16 @@ import torch
 import torch.nn as nn
 from torch.utils.tensorboard import SummaryWriter
 import torch.optim as optim
-import Rotations as Rot
-from utils import goto_project_root
+
+from copy import deepcopy
+
+
+def reinitialise_weights(model):
+    for layer in model.children():
+        if hasattr(layer, 'reset_parameters'):
+            layer.reset_parameters()
+        elif isinstance(layer, nn.Sequential) or isinstance(layer, nn.ModuleList):
+            reinitialise_weights(layer)
 
 
 class Trainer:
@@ -20,40 +28,35 @@ class Trainer:
         self.check_path = config.get("check_path", None)
         self.log_path = config["log_path"]
 
-        self.distance_loss = self._distance_loss_functions(config["distance_loss"])
-        self.regularisation_loss = self._regularisation_loss_functions(
-            config["regularisation_loss"]
-        )
-
-        self.action_period = config["training_config"]["seq_len"] - config["training_config"]["prep_phase"]
-
         self.model_specs = config["model_specs"]  # Should be a dictionary
         self.model = self._model_type(self.model_specs)
-        self.model.action_period = self.action_period
+
         self.device = config["device"]
         self.optimizer_specs = config["optimizer_specs"]
         self.optimizer = self._optimizer_type(self.optimizer_specs)
-        distance_weight = config["distance_weight"]
-        self.loss_fn = CombinedLoss(
-            self.distance_loss, self.regularisation_loss, distance_weight
-        )
-        self.model.to(self.device)
 
+        self.loss_fn = ELBO()
+
+        # Load a scheduler from config. Config provides a scheduler name and parameters
+        if config.get("scheduler", False):
+            self._scheduler()
+        self.model = self.model.to(self.device)
+
+    def _scheduler(self):
+        module = __import__("torch.optim.lr_scheduler", fromlist=[self.config["scheduler"]["name"]])
+        self.scheduler = getattr(module, self.config["scheduler"]["name"])(self.optimizer,
+                                                                      **self.config["scheduler"]["params"])
     def refresh(self):
-        if self.model.cell_type == "RNN":
-            self.model.rnn = nn.RNN(self.model.input_size, self.model.hidden_size, self.model.num_layers, batch_first=True)
-        elif self.model.cell_type == "GRU":
-            self.model.rnn = nn.GRU(self.model.input_size, self.model.hidden_size, self.model.num_layers, batch_first=True)
-        else:
-            self.model.rnn = nn.LSTM(self.model.input_size, self.model.hidden_size, self.model.num_layers, batch_first=True)
-
-        self.model.fc = nn.Linear(self.model.hidden_size, self.model.output_size)
+        reinitialise_weights(self.model)
         self.model.out = None
         self.optimizer = self._optimizer_type(self.optimizer_specs)
+        if self.config.get("scheduler", False):
+            self.scheduler = self._scheduler()
         self.model.to(self.device)
 
     def train(
-        self, train_loader, val_loader, epochs=10, save_interval=10, save_path = None, check_path = None, log_path = None):
+            self, train_loader, val_loader, epochs=10, save_interval=10, reset_interval=200, save_path=None,
+            check_path=None, log_path=None):
 
         if save_path is None:
             save_path = self.save_path
@@ -63,42 +66,87 @@ class Trainer:
             log_path = self.log_path
 
         self.writer = SummaryWriter(log_path)
+        self.epochs_no_improve = 0
+        self.best_val_loss_split = float("inf")
 
         for e in range(epochs):
             self.model.train()
-            for i, (data, target) in enumerate(train_loader):
-                data, target = data.to(self.device), target.to(self.device)
+            for i, (u, x) in enumerate(train_loader):
+                u = u.to(self.device)
+                x = x.to(self.device)
                 self.optimizer.zero_grad()
-                output = self.model(data)
-                loss = self.loss_fn(output[:, self.action_period:, :], self.model.pred, target)
+                output = self.model(x, u)
+                c_i = (e / epochs)
+                loss = self.loss_fn(c_i, self.model.reconstruction, self.model.kl)
                 loss = loss.mean()
                 loss.backward()
                 self.optimizer.step()
-                self.writer.add_scalar(
-                    "training loss", loss.item(), i + e * len(train_loader)
-                )
-            if e % save_interval == 0:
-                if check_path is not None:
-                    self.save_checkpoint(
-                        check_path + "\\checkpoint" + str(e) + ".pth", e, loss
-                    )
+                self.writer.add_scalar("training loss", loss.item(), i + e * len(train_loader))
 
-            self.validate(val_loader, e)
+                # Log additional loss components
+                self.writer.add_scalar("training reconstruction loss",
+                                       self.loss_fn.reconstruction_loss.mean().item(),
+                                       i + e * len(train_loader))
+                self.writer.add_scalar("training kl divergence",
+                                       self.loss_fn.kl_divergence.mean().item(),
+                                       i + e * len(train_loader))
+
+            if (e + 1) % save_interval == 0:
+                if check_path is not None:
+                    self.save_checkpoint(check_path + "\\checkpoint" + str(e) + ".pth", e, loss)
+
+            if (e + 1) % reset_interval == 0 and e / epochs < 0.75:
+                if self.scheduler is not None:
+                    self._scheduler()
+                    for param_group in self.optimizer.param_groups:
+                        param_group['lr'] = self.lr_init
+                self.epochs_no_improve = 0
+
+            if self.scheduler is None:
+                for param_group in self.optimizer.param_groups:
+                    param_group['lr'] = self.lr_init
+
+            if self.validate(val_loader, e):
+                break
         self.save_model(save_path)
 
     def validate(self, val_loader, epoch):
         self.model.eval()
         val_total_loss = 0
         with torch.no_grad():
-            for i, (data, target) in enumerate(val_loader):
-                data, target = data.to(self.device), target.to(self.device)
+            for i, data in enumerate(val_loader):
+                data = data.to(self.device)
                 output = self.model(data)
-                val_loss = self.loss_fn(output[:, self.action_period:, :], self.model.pred, target)
+                c_i = (epoch / self.epochs)
+                val_loss = self.loss_fn(c_i, self.model.reconstruction, self.model.kl)
                 val_loss = val_loss.mean()
                 val_total_loss += val_loss
-            self.writer.add_scalar(
-                "validation loss", val_total_loss / len(val_loader), epoch
-            )
+
+            avg_val_loss = val_total_loss / len(val_loader)
+
+            if self.scheduler is not None:
+                self.scheduler.step(avg_val_loss)
+
+            self.writer.add_scalar("validation loss", avg_val_loss, epoch)
+
+            # Log additional loss components
+            self.writer.add_scalar("validation reconstruction loss",
+                                      self.loss_fn.reconstruction_loss.mean().item(),
+                                      epoch)
+            self.writer.add_scalar("validation kl divergence",
+                                      self.loss_fn.kl_divergence.mean().item(),
+                                      epoch)
+
+            if avg_val_loss < self.best_val_loss_split:
+                self.best_val_loss = avg_val_loss
+                self.best_model = deepcopy(self.model.state_dict())
+                self.epochs_no_improve = 0
+            else:
+                self.epochs_no_improve += 1
+                if self.epochs_no_improve >= 100:
+                    print("Early stopping")
+                    return (1)
+            return (0)
 
     def save_checkpoint(self, path, e, loss):
         torch.save(
@@ -117,19 +165,29 @@ class Trainer:
         self.optimizer.load_state_dict(checkpoint["optimizer_state_dict"])
         self.model.to(self.device)  # Just in case it's not there already
 
-    def save_model(self, path, full = False):
-        if full: # Save the full model
+    def save_model(self, path, full=False):
+        if full:  # Save the full model
             torch.save(self.model, path)
         else:
             torch.save(self.model.state_dict(), path)
 
-    def load_model(self, path, full = False):
+    def load_best_model(self):
+        self.model.load_state_dict(self.best_model)
+
+    def load_model(self, path, full=False):
         if full:
             self.model = torch.load(path)
         else:
             self.model.load_state_dict(torch.load(path))
 
         self.model.to(self.device)  # Just in case it's not there already
+
+    def forward(self, features, labels):
+        self.model.eval()
+        with torch.no_grad():
+            output = self.model(features)
+            loss = self.loss_fn(output[:, -self.action_period:, :], self.model.pred, labels)
+        return output, loss
 
     def _model_type(self, model_specs):
         model_name = model_specs["model_name"]
@@ -161,102 +219,13 @@ class Trainer:
 
         return optimizer
 
-    def _distance_loss_functions(self, loss_name):
-        match loss_name:
-            case "geodesic":
-                return GeodesicLoss()
-            case "chordal distance":
-                return NotImplementedError
-            case "angular distance":
-                return NotImplementedError
-
-    def _regularisation_loss_functions(self, loss_name):
-        match loss_name:
-            case "L2":
-                return L2Regularisation()
-            case "L1":
-                return NotImplementedError
-            case "Elastic":
-                return NotImplementedError
-
-    def _default_config(self):
-        """Not implemented yet. Goal is to handle missing pieces in config."""
-        raise NotImplementedError
-
-
-class CombinedLoss(nn.Module):
-    """Implements the combined loss function"""
-
-    def __init__(self, distance_loss, regularisation_loss, distance_weight=1):
-        super(CombinedLoss, self).__init__()
-        self.distance_loss = distance_loss
-        self.regularisation_loss = regularisation_loss
-        self.distance_weight = distance_weight
-
-    def forward(self, output, pred, target):
-        return self.distance_weight * self.distance_loss(
-            pred, target
-        ) + (1 - self.distance_weight) * self.regularisation_loss(output)
-
-
-class RegularisationLoss(nn.Module):
-    """Implements a head handler for regularisation loss functions"""
-
+class ELBO(nn.Module):
     def __init__(self):
-        super(RegularisationLoss, self).__init__()
+        super(ELBO, self).__init__()
+        self.reconstruction_loss = 0
+        self.kl_divergence = 0
 
-    def forward(self, pred):
-        raise NotImplementedError
-
-
-class L2Regularisation(RegularisationLoss):
-    """Implements the L2 regularisation loss"""
-
-    def __init__(self):
-        super(L2Regularisation, self).__init__()
-
-    def forward(self, output):
-        loss = torch.norm(output, p=2)
-        return loss
-
-
-class DistanceLoss(nn.Module):
-    """Implements a head handler for distance loss functions"""
-
-    def __init__(self):
-        super(DistanceLoss, self).__init__()
-
-    def forward(self, pred, target):
-        raise NotImplementedError
-
-
-class GeodesicLoss(DistanceLoss):
-    def __init__(self, cls="quat"):
-        super(GeodesicLoss, self).__init__()
-        self.cls = cls
-
-    def forward(self, pred, target):
-        if self.cls == "quat":
-            return 2 * torch.acos(torch.clamp(torch.abs(torch.sum(pred * target, dim=-1)), -1, 1))
-        if self.cls == "mat":  # rotation matrix
-            return torch.norm(torch.logm(pred @ target.transpose(-1, -2)), p="fro")
-        if self.cls == "euler":
-            Pred = Rot.exp_quat(pred)
-            Target = Rot.exp_quat(target)
-            return 2 * torch.acos(torch.clamp(torch.abs(torch.sum(Pred * Target, dim=-1)), -1, 1))
-        return NotImplementedError(f"Class {self.cls} is not implemented.")
-
-
-# class ConfigDict(dict):
-#     def __init__(self, *args, **kwargs):
-#         super(ConfigDict, self).__init__(*args, **kwargs)
-#         self.__dict__ = self
-#         if 'distance_loss' not in self:
-#             self.distance_loss = 'geodesic'
-#         if 'loss_weights' not in self:
-#             self.loss_weights = {'distance': 1, 'regularise': 1}
-#         if 'learning_rate' not in self:
-#             self.learning_rate = 0.001
-#         raise NotImplementedError("The class is under construction."
-#                                   "For now, refer to README for a list of configs you"
-#                                   "must have.")
+    def forward(self, c_i, reconstruction, kl_divergence):
+        self.reconstruction_loss = reconstruction
+        self.kl_divergence = kl_divergence
+        return -c_i * self.reconstruction_loss + self.kl_divergence

@@ -1,0 +1,25 @@
+{
+    "dataset": "MillerRat",
+    "behav_format": "cog_session",
+    "agent_type": "RTSCog",
+    "cog_type": "Q(1)",
+    "device": "cpu",
+    "outer_fold": 0,
+    "inner_fold": 0,
+    "seed": 0,
+    "exp_folder": "exp_simulated_Akam_RTS",
+    "task": "Akam_RTS",
+    "com_prob": 0.8,
+    "rew_gen": "blocks",
+    "block_length": 50,
+    "rew_probs": [
+        0.2,
+        0.8
+    ],
+    "n_blocks": 100,
+    "n_trials": 100,
+    "sim_seed": 0,
+    "sim_exp_name": "simulated_Akam_RTS",
+    "additional_name": "",
+    "model_path": "exp_simulated_Akam_RTS\\cog_type-Q(1)\\outerfold0_innerfold0_seed0"
+}

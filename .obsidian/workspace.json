@@ -1,0 +1,310 @@
+{
+  "main": {
+    "id": "98a99deb349e3ed5",
+    "type": "split",
+    "children": [
+      {
+        "id": "d84dcfacb7cddd3b",
+        "type": "tabs",
+        "dimension": 39.30501930501931,
+        "children": [
+          {
+            "id": "af71eb1d531843b3",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "Tackling plan (AI generated - beginner draft).md",
+                "mode": "source",
+                "source": false
+              }
+            }
+          },
+          {
+            "id": "08033f8f1bc18806",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "Project Logs.md",
+                "mode": "source",
+                "source": false
+              }
+            }
+          },
+          {
+            "id": "1d485fcdcb2f09e3",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "Daily Logs.md",
+                "mode": "source",
+                "source": false
+              }
+            }
+          },
+          {
+            "id": "6ee3716d29983cbd",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "Jaffe et al. Methods.md",
+                "mode": "source",
+                "source": false
+              }
+            }
+          },
+          {
+            "id": "0e06834e346d81a3",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "Meeting with Marcelo 0716.md",
+                "mode": "source",
+                "source": false
+              }
+            }
+          },
+          {
+            "id": "8f65f87a04dddbf7",
+            "type": "leaf",
+            "state": {
+              "type": "image",
+              "state": {
+                "file": "figures/Bartolo RT explore.png"
+              }
+            }
+          }
+        ],
+        "currentTab": 4
+      },
+      {
+        "id": "ae155e6b9725a2fc",
+        "type": "split",
+        "dimension": 60.6949806949807,
+        "children": [
+          {
+            "id": "cd75e96eee858ff9",
+            "type": "tabs",
+            "children": [
+              {
+                "id": "a7e89e3cf5bef932",
+                "type": "leaf",
+                "state": {
+                  "type": "image",
+                  "state": {
+                    "file": "Factor graph TDV.png"
+                  }
+                }
+              },
+              {
+                "id": "25c118a13851b935",
+                "type": "leaf",
+                "state": {
+                  "type": "image",
+                  "state": {
+                    "file": "RTnET.png"
+                  }
+                }
+              }
+            ]
+          },
+          {
+            "id": "0179888b9262513c",
+            "type": "tabs",
+            "children": [
+              {
+                "id": "9884cf5e11c57e0a",
+                "type": "leaf",
+                "state": {
+                  "type": "markdown",
+                  "state": {
+                    "file": "notes from Marcelo meeting.md",
+                    "mode": "source",
+                    "source": false
+                  }
+                }
+              }
+            ]
+          }
+        ],
+        "direction": "horizontal"
+      }
+    ],
+    "direction": "vertical"
+  },
+  "left": {
+    "id": "2e57781e5d10a052",
+    "type": "split",
+    "children": [
+      {
+        "id": "68e1e6572498a13e",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "e0431cbb469f8b5c",
+            "type": "leaf",
+            "state": {
+              "type": "file-explorer",
+              "state": {
+                "sortOrder": "alphabetical"
+              }
+            }
+          },
+          {
+            "id": "81c0d76267edd9e9",
+            "type": "leaf",
+            "state": {
+              "type": "search",
+              "state": {
+                "query": "",
+                "matchingCase": false,
+                "explainSearch": false,
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical"
+              }
+            }
+          },
+          {
+            "id": "16096144d3ea61c3",
+            "type": "leaf",
+            "state": {
+              "type": "bookmarks",
+              "state": {}
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 200
+  },
+  "right": {
+    "id": "513c847a2941ae5c",
+    "type": "split",
+    "children": [
+      {
+        "id": "46ab9e906156bfd7",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "9427146e9b571d5a",
+            "type": "leaf",
+            "state": {
+              "type": "backlink",
+              "state": {
+                "file": "notes from Marcelo meeting.md",
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical",
+                "showSearch": false,
+                "searchQuery": "",
+                "backlinkCollapsed": false,
+                "unlinkedCollapsed": true
+              }
+            }
+          },
+          {
+            "id": "273d0dc38525b81f",
+            "type": "leaf",
+            "state": {
+              "type": "outgoing-link",
+              "state": {
+                "file": "notes from Marcelo meeting.md",
+                "linksCollapsed": false,
+                "unlinkedCollapsed": true
+              }
+            }
+          },
+          {
+            "id": "fdb2af238fb2bfde",
+            "type": "leaf",
+            "state": {
+              "type": "tag",
+              "state": {
+                "sortOrder": "frequency",
+                "useHierarchy": true
+              }
+            }
+          },
+          {
+            "id": "f9e9501fd62f7796",
+            "type": "leaf",
+            "state": {
+              "type": "outline",
+              "state": {
+                "file": "notes from Marcelo meeting.md"
+              }
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300,
+    "collapsed": true
+  },
+  "left-ribbon": {
+    "hiddenItems": {
+      "switcher:Open quick switcher": false,
+      "graph:Open graph view": false,
+      "canvas:Create new canvas": false,
+      "daily-notes:Open today's daily note": false,
+      "templates:Insert template": false,
+      "command-palette:Open command palette": false,
+      "obsidian-excalidraw-plugin:New Excalidraw drawing": false
+    }
+  },
+  "active": "9884cf5e11c57e0a",
+  "lastOpenFiles": [
+    "Meeting with Marcelo 0716.md",
+    "notes from Marcelo meeting.md",
+    "Factor graph TDV.png",
+    "RTnET.png",
+    "figures/Bartolo RT explore.png",
+    "MSDNet.png",
+    "CNet illustration.png",
+    "Simulated Tasks.md",
+    "Tackling plan (AI generated - beginner draft).md",
+    "Project Logs.md",
+    "Jaffe et al. Methods.md",
+    "Daily Logs.md",
+    "codes/Codes/Network_models/__pycache__/BaseNNAgent.cpython-310.pyc",
+    "codes/Codes/Network_models/__pycache__/Task_DyVA.cpython-310.pyc",
+    "codes/Codes/Network_models/__pycache__/__init__.cpython-310.pyc",
+    "codes/Codes/Network_models/__pycache__/Trainer.cpython-310.pyc",
+    "codes/Codes/Network_models/__pycache__",
+    "codes/Codes/CustomMapper/__pycache__/__init__.cpython-310.pyc",
+    "codes/Codes/CustomMapper/__pycache__/CustomMapper.cpython-310.pyc",
+    "codes/Codes/CustomMapper/__pycache__",
+    "codes/Codes/explore.ipynb",
+    "codes/Codes/explore_bak.ipynb",
+    "codes/Codes/Network_models/Notes.md",
+    "codes/Codes/README.md",
+    "Miller et al. 2023.md",
+    "Lit review on RNN cognitive modelling.md",
+    "Li et al. 2023.md",
+    "Jaffe et al. 2023.md",
+    "codes/JIAN_codes/Network_models/Notes.md",
+    "GUI/output.gif",
+    "Tasks.md",
+    "data/cow_mesh/cow_texture.png",
+    "README.md",
+    "Quaternion.md",
+    "shift operator.png",
+    "Week 1.md",
+    "Plans.md",
+    "Quaternion distance metrics.md",
+    "exp of der.png",
+    "Quaternion integration.md",
+    "bak/Week 1.md",
+    "bak/README.md",
+    "bak/Quaternion.md",
+    "bak/Quaternion integration.md",
+    "venv312/Lib/site-packages/IPython/core/tests/2x2.png"
+  ]
+}

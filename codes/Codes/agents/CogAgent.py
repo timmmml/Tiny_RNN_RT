@@ -163,12 +163,14 @@ class CogAgent(BaseAgent):
         behav['reward'] = []
         behav['params'] = self.model.params
         behav['mid_vars'] = []
+        behav['score'] = []
 
         np.random.seed(sim_seed)
         random.seed(sim_seed)
 
         for _ in range(n_blocks):
             self.DVs = self.model.simulate(task, n_trials, get_DVs=True)
+            behav['score'].append(self.DVs['scores'])
             behav['action'].append(self.DVs['choices'])
             behav['stage2'].append(self.DVs['second_steps'])
             behav['reward'].append(self.DVs['outcomes'])
