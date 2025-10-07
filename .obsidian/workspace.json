@@ -4,134 +4,20 @@
     "type": "split",
     "children": [
       {
-        "id": "d84dcfacb7cddd3b",
+        "id": "68f82b321c0467f1",
         "type": "tabs",
-        "dimension": 39.30501930501931,
         "children": [
           {
-            "id": "af71eb1d531843b3",
+            "id": "ea68ad5e7903e9a0",
             "type": "leaf",
             "state": {
-              "type": "markdown",
-              "state": {
-                "file": "Tackling plan (AI generated - beginner draft).md",
-                "mode": "source",
-                "source": false
-              }
-            }
-          },
-          {
-            "id": "08033f8f1bc18806",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "Project Logs.md",
-                "mode": "source",
-                "source": false
-              }
-            }
-          },
-          {
-            "id": "1d485fcdcb2f09e3",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "Daily Logs.md",
-                "mode": "source",
-                "source": false
-              }
-            }
-          },
-          {
-            "id": "6ee3716d29983cbd",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "Jaffe et al. Methods.md",
-                "mode": "source",
-                "source": false
-              }
-            }
-          },
-          {
-            "id": "0e06834e346d81a3",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "Meeting with Marcelo 0716.md",
-                "mode": "source",
-                "source": false
-              }
-            }
-          },
-          {
-            "id": "8f65f87a04dddbf7",
-            "type": "leaf",
-            "state": {
-              "type": "image",
-              "state": {
-                "file": "figures/Bartolo RT explore.png"
-              }
+              "type": "empty",
+              "state": {},
+              "icon": "lucide-file",
+              "title": "New tab"
             }
           }
-        ],
-        "currentTab": 4
-      },
-      {
-        "id": "ae155e6b9725a2fc",
-        "type": "split",
-        "dimension": 60.6949806949807,
-        "children": [
-          {
-            "id": "cd75e96eee858ff9",
-            "type": "tabs",
-            "children": [
-              {
-                "id": "a7e89e3cf5bef932",
-                "type": "leaf",
-                "state": {
-                  "type": "image",
-                  "state": {
-                    "file": "Factor graph TDV.png"
-                  }
-                }
-              },
-              {
-                "id": "25c118a13851b935",
-                "type": "leaf",
-                "state": {
-                  "type": "image",
-                  "state": {
-                    "file": "RTnET.png"
-                  }
-                }
-              }
-            ]
-          },
-          {
-            "id": "0179888b9262513c",
-            "type": "tabs",
-            "children": [
-              {
-                "id": "9884cf5e11c57e0a",
-                "type": "leaf",
-                "state": {
-                  "type": "markdown",
-                  "state": {
-                    "file": "notes from Marcelo meeting.md",
-                    "mode": "source",
-                    "source": false
-                  }
-                }
-              }
-            ]
-          }
-        ],
-        "direction": "horizontal"
+        ]
       }
     ],
     "direction": "vertical"
@@ -150,8 +36,11 @@
             "state": {
               "type": "file-explorer",
               "state": {
-                "sortOrder": "alphabetical"
-              }
+                "sortOrder": "alphabetical",
+                "autoReveal": false
+              },
+              "icon": "lucide-folder-closed",
+              "title": "Files"
             }
           },
           {
@@ -166,7 +55,9 @@
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical"
-              }
+              },
+              "icon": "lucide-search",
+              "title": "Search"
             }
           },
           {
@@ -174,7 +65,9 @@
             "type": "leaf",
             "state": {
               "type": "bookmarks",
-              "state": {}
+              "state": {},
+              "icon": "lucide-bookmark",
+              "title": "Bookmarks"
             }
           }
         ]
@@ -197,7 +90,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "notes from Marcelo meeting.md",
+                "file": "RT RNN project specs.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -205,7 +98,9 @@
                 "searchQuery": "",
                 "backlinkCollapsed": false,
                 "unlinkedCollapsed": true
-              }
+              },
+              "icon": "links-coming-in",
+              "title": "Backlinks for RT RNN project specs"
             }
           },
           {
@@ -214,10 +109,12 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "notes from Marcelo meeting.md",
+                "file": "RT RNN project specs.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
-              }
+              },
+              "icon": "links-going-out",
+              "title": "Outgoing links from RT RNN project specs"
             }
           },
           {
@@ -228,7 +125,9 @@
               "state": {
                 "sortOrder": "frequency",
                 "useHierarchy": true
-              }
+              },
+              "icon": "lucide-tags",
+              "title": "Tags"
             }
           },
           {
@@ -237,8 +136,10 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "notes from Marcelo meeting.md"
-              }
+                "file": "RT RNN project specs.md"
+              },
+              "icon": "lucide-list",
+              "title": "Outline of RT RNN project specs"
             }
           }
         ]
@@ -259,52 +160,53 @@
       "obsidian-excalidraw-plugin:New Excalidraw drawing": false
     }
   },
-  "active": "9884cf5e11c57e0a",
+  "active": "ea68ad5e7903e9a0",
   "lastOpenFiles": [
-    "Meeting with Marcelo 0716.md",
-    "notes from Marcelo meeting.md",
-    "Factor graph TDV.png",
-    "RTnET.png",
-    "figures/Bartolo RT explore.png",
-    "MSDNet.png",
+    "Meeting preps.md",
+    "Meeting agenda 08192025.md",
+    "2021 4F10 for practice.md",
     "CNet illustration.png",
-    "Simulated Tasks.md",
+    "Factor graph TDV.png",
+    "Daily Logs.md",
+    "Forward backward.md",
+    "Pasted image 20250812081204.png",
+    "Pasted image 20250812080941.png",
+    "logs/slow_fast/events.out.tfevents.1754763755.pop-os.995209.6",
+    "logs/slow_fast/events.out.tfevents.1754763245.pop-os.995209.5",
+    "logs/slow_fast/events.out.tfevents.1754763098.pop-os.995209.4",
+    "logs/slow_fast/events.out.tfevents.1754762913.pop-os.995209.3",
+    "logs/slow_fast/events.out.tfevents.1754762882.pop-os.995209.2",
+    "logs/slow_fast/events.out.tfevents.1754762865.pop-os.995209.1",
+    "logs/slow_fast/events.out.tfevents.1754762821.pop-os.995209.0",
+    "codes/Codes/slow_fast_archive.pth",
+    "logs/slow_fast/events.out.tfevents.1754762321.pop-os.799580.29",
+    "logs/slow_fast/events.out.tfevents.1754762237.pop-os.799580.28",
+    "HMMModels Intro.md",
     "Tackling plan (AI generated - beginner draft).md",
+    "Simulated Tasks.md",
+    "Jaffe et al..md",
+    "figures/Bartolo RT explore.png",
+    "Meeting 12052025.md",
+    "TinyRNN_RT_Plan.md",
+    "RTify summary.md",
+    "Meeting notes.md",
+    "Pasted image 20250728183553.png",
+    "Pasted image 20250728183413.png",
+    "notes from Marcelo meeting.md",
+    "Meeting with Marcelo 20241022.md",
+    "Meeting notes Jan 21.md",
+    "Prakhar's idea.md",
+    "Pasted image 20250512174600.png",
+    "RTnET.png",
+    "Li et al. 2023.md",
+    "Lit review on RNN cognitive modelling.md",
+    "RT RNN project specs.md",
+    "T.md",
     "Project Logs.md",
     "Jaffe et al. Methods.md",
-    "Daily Logs.md",
-    "codes/Codes/Network_models/__pycache__/BaseNNAgent.cpython-310.pyc",
-    "codes/Codes/Network_models/__pycache__/Task_DyVA.cpython-310.pyc",
-    "codes/Codes/Network_models/__pycache__/__init__.cpython-310.pyc",
-    "codes/Codes/Network_models/__pycache__/Trainer.cpython-310.pyc",
-    "codes/Codes/Network_models/__pycache__",
-    "codes/Codes/CustomMapper/__pycache__/__init__.cpython-310.pyc",
-    "codes/Codes/CustomMapper/__pycache__/CustomMapper.cpython-310.pyc",
-    "codes/Codes/CustomMapper/__pycache__",
-    "codes/Codes/explore.ipynb",
-    "codes/Codes/explore_bak.ipynb",
+    "Meeting with Marcelo 0716.md",
+    "MSDNet.png",
     "codes/Codes/Network_models/Notes.md",
-    "codes/Codes/README.md",
-    "Miller et al. 2023.md",
-    "Lit review on RNN cognitive modelling.md",
-    "Li et al. 2023.md",
-    "Jaffe et al. 2023.md",
-    "codes/JIAN_codes/Network_models/Notes.md",
-    "GUI/output.gif",
-    "Tasks.md",
-    "data/cow_mesh/cow_texture.png",
-    "README.md",
-    "Quaternion.md",
-    "shift operator.png",
-    "Week 1.md",
-    "Plans.md",
-    "Quaternion distance metrics.md",
-    "exp of der.png",
-    "Quaternion integration.md",
-    "bak/Week 1.md",
-    "bak/README.md",
-    "bak/Quaternion.md",
-    "bak/Quaternion integration.md",
-    "venv312/Lib/site-packages/IPython/core/tests/2x2.png"
+    "codes/Codes/README.md"
   ]
 }

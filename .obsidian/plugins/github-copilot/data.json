@@ -1,13 +1,13 @@
 {
-  "nodePath": "node.exe",
+  "nodePath": "/home/timmy/.local/share/nvm/v20.16.0/bin/node",
   "enabled": true,
   "hotkeys": {
     "accept": "Ctrl-l",
     "cancel": "Escape",
-    "request": "Ctrl-Shift-?",
-    "partial": "Ctrl-Shift-L",
-    "next": "Ctrl-Shift-ArrowDown",
-    "disable": "Ctrl-Shift-ArrowRight"
+    "request": "Ctrl-\\",
+    "partial": "Ctrl-Alt-l",
+    "next": "Ctrl-Alt-ArrowRight",
+    "disable": "Ctrl-Alt-ArrowDown"
   },
   "suggestionDelay": 250,
   "debug": false,

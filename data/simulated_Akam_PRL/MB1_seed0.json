@@ -1,0 +1,25 @@
+{
+    "dataset": "MillerRat",
+    "behav_format": "cog_session",
+    "agent_type": "PRLCog",
+    "cog_type": "MB1",
+    "device": "cpu",
+    "outer_fold": 0,
+    "inner_fold": 0,
+    "seed": 0,
+    "exp_folder": "exp_simulated_Akam_PRL",
+    "task": "Akam_PRL",
+    "com_prob": 1,
+    "rew_gen": "blocks",
+    "block_length": 50,
+    "rew_probs": [
+        0.2,
+        0.8
+    ],
+    "n_blocks": 100,
+    "n_trials": 100,
+    "sim_seed": 0,
+    "sim_exp_name": "simulated_Akam_PRL",
+    "additional_name": "",
+    "model_path": "exp_simulated_Akam_PRL/cog_type-MB1/outerfold0_innerfold0_seed0"
+}

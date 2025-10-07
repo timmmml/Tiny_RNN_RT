@@ -1,0 +1,4 @@
+\beamer@sectionintoc {1}{Task to model}{2}{0}{1}
+\beamer@sectionintoc {2}{Modelling Approaches}{3}{0}{2}
+\beamer@subsectionintoc {2}{1}{RNN Models}{5}{0}{2}
+\beamer@subsectionintoc {2}{2}{Finite-state Automata}{13}{0}{2}

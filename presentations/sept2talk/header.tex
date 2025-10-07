@@ -1,0 +1,55 @@
+% This is the header file I usually use in my presentations
+
+\usepackage{tikz,amsmath,bbold,cmbright}
+
+\usetikzlibrary[positioning,arrows,arrows.meta,shapes,calc,spy,intersections,shadows]
+\usetikzlibrary[decorations.text,decorations.pathmorphing,decorations.markings]
+
+\parindent 0pt
+\beamertemplatenavigationsymbolsempty
+\usebackgroundtemplate{%
+\tikz\fill[white] (0,0) to (\paperwidth,\paperheight);}
+\geometry{left=0in,top=-0.015in,right=0in,bottom=0.0in}
+\renewcommand\b\mathbold
+\renewcommand\d{{\sf d}}
+
+% main slide picture
+\newcommand{\mypic}[2]{%
+  \begin{tikzpicture}[remember picture,
+      x=0.01\paperwidth,y=0.01\paperheight,
+      title/.style={anchor=base,scale=1.5,font=\bfseries,text=black},
+      #1]{
+  \draw [white] (0,0) rectangle (100,100);
+  \begin{scope}
+  \clip (0,0) rectangle (100,100);
+  #2
+  \end{scope}
+  }
+\end{tikzpicture}}
+
+\setbeamercolor{itemize item}{fg=black}  
+
+\newcommand{\outline}[3]{
+  \begin{frame}
+    \mypic{}{
+    \node at (50, 90)[title] {Outline};
+    \node[text width = 0.8\paperwidth, align=left, anchor=north west] at (#1, #2){
+    \tableofcontents[#3]
+    };}
+  \end{frame}
+}
+
+
+\newcommand{\bibcreate}[1]{\addbibresource{#1.bib} \bibliographystyle{plain} \bibliography{#1}}
+
+
+\setbeamerfont{section in toc}{size=\large,series=\bfseries}
+\setbeamerfont{subsection in toc}{size=\large,series=\mdseries}
+%\setlength{\parskip}{5em}
+%\setbeamertemplate{section in toc}[square]  % Changes section bullet style
+%\setbeamertemplate{subsection in toc}[circle] 
+
+\setbeamertemplate{section in toc}{%
+  \vspace{1em}
+  \inserttocsection
+  }

@@ -1,0 +1,77 @@
+\documentclass[cropped,10pt]{standalone}
+
+\usepackage{tikz}
+
+% helvetica font
+\usepackage[scaled=1.1]{helvet}
+\usepackage{sfmath}
+\renewcommand{\familydefault}{\sfdefault}
+
+% or comment out previous 3 lines, and uncomment the one below, for clean latex font
+%\usepackage{cmbright}
+
+% you might want to define some colors:
+%\definecolor{myred}{HTML}{E51E10}
+%\definecolor{myblue}{HTML}{56B4E9}
+
+\usetikzlibrary[positioning,arrows,arrows.meta,shapes,calc,spy,intersections,shadows,bending]
+\usetikzlibrary[decorations.text,decorations.pathmorphing,decorations.markings]
+
+\tikzstyle{block} = [rectangle, draw, minimum height=2em, minimum width=3em]
+\tikzstyle{arrow} = [thick,->,>=stealth]
+
+
+\pagestyle{empty}
+\thispagestyle{empty}
+
+\begin{document}
+
+\begin{tikzpicture}[x = 0.8cm, y = 0.8cm, node distance = 2cm]
+
+% ----------------------------------------------------
+
+% helper grid (comment out once you're done!)
+%\draw[help lines,step=1,thin,gray!20] (0,0) grid (100, 100);
+%\draw[help lines,step=5,gray!20,very thick] (0,0) grid (100, 100);
+%\draw[help lines,step=10,gray!40,ultra thick] (0,0) grid (100, 100);
+%
+%\foreach \j in {10,15,..., 50}
+%  \node at (\j,85) [fill=white,text=red!80!black] {\j};
+%\foreach \j in {10,15,..., 95}
+%  \node at (23,\j) [fill=white,text=green!80!black] {\j};
+%
+%
+% ----------------------------------------------------
+
+  \node(fixation) [block] at (10, 90) {
+  \begin{tabular}{c}
+    Fixation \\
+    (~500ms)
+  \end{tabular}
+  }; 
+  \node (choice) [block] at (15, 90){
+  \begin{tabular}{c}
+    Choice (500ms) \\
+    (A or B)
+  \end{tabular}
+  };
+  \node (reward) [block] at (20, 90){
+  \begin{tabular}{c}
+    Reward \\
+  \end{tabular}
+  };
+
+  \draw[arrow] (7,90) -- (fixation.west);
+  \draw[arrow] (fixation.east) -- (choice.west);
+  \draw[arrow] (choice.east) -- (reward.west);
+  \draw[arrow] (reward.east) -- (23, 90);
+
+% HERE YOU CAN USE TIKZ CODE TO ADD DIAGRAMS ETC
+
+% don't forget all your panel labels etc
+% e.g.:
+% \node at (10,90) [anchor=base,font=\bfseries,scale=1.5] {A};
+
+\end{tikzpicture}
+\end{document}
+

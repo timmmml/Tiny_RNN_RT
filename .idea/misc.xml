@@ -7,5 +7,5 @@
     <option name="pathToExecutable" value="C:\Users\timmy\AppData\Local\Programs\Python\Python312\Scripts\black.exe" />
     <option name="sdkName" value="RT_RNN" />
   </component>
-  <component name="ProjectRootManager" version="2" project-jdk-name="RT_RNN" project-jdk-type="Python SDK" />
+  <component name="ProjectRootManager" version="2" project-jdk-name="test" project-jdk-type="Python SDK" />
 </project>

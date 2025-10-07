@@ -1,0 +1,115 @@
+\documentclass[cropped,10pt]{standalone}
+
+\usepackage{tikz}
+
+% helvetica font
+\usepackage[scaled=1.1]{helvet}
+\usepackage{sfmath}
+\renewcommand{\familydefault}{\sfdefault}
+
+% or comment out previous 3 lines, and uncomment the one below, for clean latex font
+%\usepackage{cmbright}
+
+% you might want to define some colors:
+%\definecolor{myred}{HTML}{E51E10}
+%\definecolor{myblue}{HTML}{56B4E9}
+
+\usetikzlibrary[positioning,arrows,arrows.meta,shapes,calc,spy,intersections,shadows,bending]
+\usetikzlibrary[decorations.text,decorations.pathmorphing,decorations.markings]
+
+\pagestyle{empty}
+\thispagestyle{empty}
+\tikzstyle{block} = [rectangle, draw, minimum height=2em, minimum width=3em]
+\tikzstyle{arrow} = [thick,->,>=stealth]
+
+
+\begin{document}
+
+\begin{tikzpicture}[x = 0.8cm, y = 0.8cm, node distance = 2cm]
+% ----------------------------------------------------
+
+% helper grid (comment out once you're done!)
+%\draw[help lines,step=1,thin,gray!20] (0,0) grid (100, 100);
+%\draw[help lines,step=5,gray!20,very thick] (0,0) grid (100, 100);
+%\draw[help lines,step=10,gray!40,ultra thick] (0,0) grid (100, 100);
+%
+%\foreach \j in {10,15,..., 50}
+%  \node at (\j,85) [fill=white,text=red!80!black] {\j};
+%\foreach \j in {10,15,..., 95}
+%  \node at (23,\j) [fill=white,text=green!80!black] {\j};
+%
+% ----------------------------------------------------
+
+
+  \node(pasts) [block] at (10, 90) {
+  \begin{tabular}{c}
+    $s_{t - 1}$
+  \end{tabular}
+  }; 
+  \node (pasta) [block] at (10, 88){
+  \begin{tabular}{c}
+    $a_{t - 1}$
+  \end{tabular}
+  };
+  \node (pastr) [block] at (10, 86){
+  \begin{tabular}{c}
+    $r_{t - 1}$
+  \end{tabular}
+  };
+
+  \draw  [line width = 0.5mm, style = dashed] (11.5, 91) -- (11.5, 85) node[midway](l); 
+
+  \node (model) [block, color = green!50!black] at (15, 88) {
+  \begin{tabular}{c}
+    Model \\
+    (HMM, RNN, etc)
+  \end{tabular}
+  };
+
+  \draw [arrow, color = green!50!black] (l)+(0, 0) -- (model.west);
+
+  \node (pred) [block, color = green!50!black] at (13.8, 86) {
+  \begin{tabular}{c}
+    $Q(a_t | s_{0:t-1},...)$
+  \end{tabular}
+  };
+
+  \node (rt) [block, color = green!50!black] at (17, 86) {
+  \begin{tabular}{c}
+    $\widehat{RT}_t$ 
+  \end{tabular}
+  };
+
+  \draw [arrow, color = green!50!black] (model) -- (pred);
+  \draw [arrow, color = green!50!black] (model) -- (rt);
+
+
+  \node(pasts) [block] at (20, 90) {
+  \begin{tabular}{c}
+    $s_{t}$
+  \end{tabular}
+  }; 
+  \node (pasta) [block] at (20, 88){
+  \begin{tabular}{c}
+    $a_{t}$
+  \end{tabular}
+  };
+  \node (pastr) [block] at (20, 86){
+  \begin{tabular}{c}
+    $r_{t}$
+  \end{tabular}
+  };
+
+  \draw  [line width = 0.5mm, style = dashed] (18.7, 91) -- (18.7, 85) node[midway](l2); 
+
+  \draw [arrow] (11.5, 90) -- (18.7, 90); 
+  
+% HERE YOU CAN USE TIKZ CODE TO ADD DIAGRAMS ETC
+
+% don't forget all your panel labels etc
+% e.g.:
+% \node at (10,90) [anchor=base,font=\bfseries,scale=1.5] {A};
+
+\end{tikzpicture}
+\end{document}
+

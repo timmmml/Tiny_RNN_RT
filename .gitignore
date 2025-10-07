@@ -1,0 +1,5 @@
+.idea/
+.obsidian/
+*.png
+*.md
+!README.md

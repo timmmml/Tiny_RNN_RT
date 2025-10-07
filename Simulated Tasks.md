@@ -18,3 +18,7 @@ In Li et al. 2023's tasks, agents all choose among $\{  A_{1}, A_{2} \}$ in each
 From [[Jaffe et al. 2023]]
 - Task-switching - Ebb-and Flow.
 - 
+
+
+New agent notes :
+- idea: use a "reservoir" of recurrent units, with (ISN) dynamics, to 
