@@ -50,7 +50,6 @@ class RTRNN(nn.Module):
     """
     def __init__(self, model_params):
         super(RTRNN, self).__init__()
-        self.batch_size = model_params.get("batch_size", 32)
         self.recurrence_per_trial = model_params.get("recurrence_per_trial", 1)
         self.input_size = model_params.get("input_size", 4)  # inject input size
         self.output_size = model_params.get("output_size", 2)
@@ -133,23 +132,22 @@ class RTRNN(nn.Module):
             )
         else:
             raise ValueError("Invalid cell type.")
-        # self.h0 = nn.Parameter(torch.randn(1, self.batch_size, self.hidden_size))
 
     def forward(self, x):
-        assert x.shape[0] == self.batch_size
-        self.h0 = torch.randn(1, self.batch_size, self.hidden_size, device=self.device)
+        batch_size = x.shape[0]
+        self.h0 = torch.randn(1, batch_size, self.hidden_size, device=self.device)
         seq_len = x.shape[1]
         x = self.transform_input(x)
         h, _ = self.rnn(x, self.h0)
         h = h.reshape(
-            self.batch_size, seq_len, self.recurrence_per_trial, self.hidden_size
+            batch_size, seq_len, self.recurrence_per_trial, self.hidden_size
         )
-        h = h.reshape(self.batch_size * seq_len, -1)
+        h = h.reshape(batch_size * seq_len, -1)
         out = self.trial_output(h)
         if not self.out_distribution:
             out[..., 0] = torch.sigmoid(out[..., 0])  # choice
         out = out.reshape(
-            self.batch_size,
+            batch_size,
             seq_len,
             self.output_size * (1 + int(self.out_distribution)),
         )
@@ -199,20 +197,20 @@ class RTRNN(nn.Module):
 
     def show(self, x):
         """Show the output of the network."""
-        self.batch_size = x.shape[0]
-        self.h0 = torch.randn(1, self.batch_size, self.hidden_size, device=self.device)
+        batch_size = x.shape[0]
+        self.h0 = torch.randn(1, batch_size, self.hidden_size, device=self.device)
         seq_len = x.shape[1]
         x = self.transform_input(x)
         h, _ = self.rnn(x, self.h0)
         h_ = copy.deepcopy(h)
-        h = h.reshape(self.batch_size * seq_len, -1)
+        h = h.reshape(batch_size * seq_len, -1)
 
         out = self.trial_output(h)
         if not self.out_distribution:
             out[..., 0] = torch.sigmoid(out[..., 0])  # choice
 
         out = out.reshape(
-            self.batch_size,
+            batch_size,
             seq_len,
             self.output_size * (1 + int(self.out_distribution)),
         )
@@ -474,7 +472,6 @@ class RTDiscretisedRNN(nn.Module):
     
     def __init__(self, model_params):
         super(RTDiscretisedRNN, self).__init__()
-        self.batch_size = model_params.get("batch_size", 32)
         self.dt = model_params.get("dt", 0.1) # in seconds
         self.reward_presentation_time = model_params.get("reward_presentation_time", 0.5) # in seconds
         self.fixation_time = model_params.get("fixation_time", 1) # in seconds

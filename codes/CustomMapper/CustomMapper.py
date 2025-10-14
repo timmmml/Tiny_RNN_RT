@@ -154,8 +154,6 @@ class CustomMapper:
         match task_id:
             case "1.1":
                 self._map_to_task_1_1(config)
-            case "1.2":
-                self._map_to_task_1_2(config)
             case "Task-DyVA":
                 self._map_to_task_DyVA(config)
             case _:
@@ -216,10 +214,7 @@ class CustomMapper:
 
         self.input_data = input_data
         self.choice_data = choice_data
-        
 
-    def _map_to_task_1_2(self):
-        raise NotImplementedError
 
     def _map_to_task_DyVA(self, config):
         if config.get("task", None) != "PRL_Bartolo":
